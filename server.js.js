@@ -4,9 +4,18 @@ const path = require('path');
 const app = express();
 
 app.use(express.json());
-app.use(express.static('public'));
 
-const CSV_FILE = path.join(__dirname, 'survey_responses.csv');
+// ایجاد پوشه public اگر وجود نداشته باشد
+const publicDir = path.join(__dirname, 'public');
+if (!fs.existsSync(publicDir)) {
+    fs.mkdirSync(publicDir);
+}
+
+// سرویس دهی فایل‌های استاتیک از پوشه public
+app.use(express.static(publicDir));
+
+// مسیر فایل CSV در پوشه public
+const CSV_FILE = path.join(publicDir, 'survey_responses.csv');
 
 // ایجاد فایل CSV اگر وجود نداشته باشد
 if (!fs.existsSync(CSV_FILE)) {
@@ -17,47 +26,53 @@ if (!fs.existsSync(CSV_FILE)) {
 
 // Route برای ذخیره پرسشنامه
 app.post('/save-survey', (req, res) => {
-    const formData = req.body;
-    
-    // خواندن فایل CSV موجود
-    const csvData = fs.readFileSync(CSV_FILE, 'utf8');
-    const rows = csvData.trim().split('\n');
-    
-    // بررسی وجود کد ملی در فایل
-    let duplicate = false;
-    for (let i = 1; i < rows.length; i++) {
-        const columns = rows[i].split(',');
-        if (columns[2] === formData.nationalCode) {
-            duplicate = true;
-            break;
+    try {
+        const formData = req.body;
+        
+        // اعتبارسنجی داده‌های ورودی
+        if (!formData.nationalCode || !formData.firstName || !formData.lastName) {
+            return res.status(400).json({ error: 'اطلاعات ضروری ارسال نشده است' });
         }
+
+        // خواندن فایل CSV موجود
+        const csvData = fs.readFileSync(CSV_FILE, 'utf8');
+        const rows = csvData.trim().split('\n');
+        
+        // بررسی وجود کد ملی در فایل
+        const duplicate = rows.some((row, index) => {
+            if (index === 0) return false; // Skip header
+            const columns = row.split(',');
+            return columns[2] === formData.nationalCode;
+        });
+        
+        if (duplicate) {
+            return res.json({ duplicate: true });
+        }
+        
+        // اضافه کردن داده جدید به فایل CSV
+        const timestamp = new Date().toISOString();
+        const newRow = [
+            `"${formData.firstName}"`,
+            `"${formData.lastName}"`,
+            `"${formData.nationalCode}"`,
+            formData.age,
+            `"${formData.grade}"`,
+            `"${formData.academicStatus}"`,
+            ...Object.values(formData.answers).map(answer => `"${answer}"`),
+            `"${timestamp}"`
+        ].join(',') + '\n';
+        
+        fs.appendFileSync(CSV_FILE, newRow);
+        
+        res.json({ success: true });
+    } catch (error) {
+        console.error('Error saving survey:', error);
+        res.status(500).json({ error: 'خطای سرور در پردازش درخواست' });
     }
-    
-    if (duplicate) {
-        return res.json({ duplicate: true });
-    }
-    
-    // اضافه کردن داده جدید به فایل CSV
-    const timestamp = new Date().toISOString();
-    const newRow = [
-        formData.firstName,
-        formData.lastName,
-        formData.nationalCode,
-        formData.age,
-        formData.grade,
-        formData.academicStatus,
-        ...Object.values(formData.answers),
-        timestamp
-    ].join(',') + '\n';
-    
-    fs.appendFileSync(CSV_FILE, newRow);
-    
-    res.json({ success: true });
 });
 
 // Route برای صفحه دانلود
 app.get('/download', (req, res) => {
-    // ارسال صفحه HTML زیبا برای دانلود
     const html = `
     <!DOCTYPE html>
     <html lang="fa" dir="rtl">
@@ -120,7 +135,7 @@ app.get('/download', (req, res) => {
             <div class="icon">📊</div>
             <h1>دانلود نتایج پرسشنامه</h1>
             <p>برای دریافت فایل CSV حاوی تمام پاسخ‌ها، دکمه زیر را کلیک کنید</p>
-            <a href="/download-csv" class="download-btn">دانلود فایل CSV</a>
+            <a href="/survey_responses.csv" class="download-btn">دانلود فایل CSV</a>
         </div>
     </body>
     </html>
@@ -128,26 +143,14 @@ app.get('/download', (req, res) => {
     res.send(html);
 });
 
-// Route برای دانلود واقعی فایل CSV
-app.get('/download-csv', (req, res) => {
-    if (!fs.existsSync(CSV_FILE)) {
-        return res.status(404).send('فایل یافت نشد');
-    }
-    
-    res.setHeader('Content-Type', 'text/csv');
-    res.setHeader('Content-Disposition', 'attachment; filename=survey_results.csv');
-    
-    const fileStream = fs.createReadStream(CSV_FILE);
-    fileStream.pipe(res);
-});
-
 // Route اصلی
 app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'index.html'));
+    res.sendFile(path.join(publicDir, 'index.html'));
 });
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
     console.log(`سرور در حال اجرا روی پورت ${PORT}`);
     console.log(`برای دانلود به آدرس http://localhost:${PORT}/download مراجعه کنید`);
+    console.log(`دسترسی مستقیم به فایل CSV: http://localhost:${PORT}/survey_responses.csv`);
 });
