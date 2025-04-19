@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>پرسشنامه بررسی رابطه تعارض با والدین، بیثباتی هیجانی و وابستگی به فضای مجازی</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1, h2, h3 {
+            color: #333;
+            text-align: center;
+        }
+        h1 {
+            margin-bottom: 20px;
+            font-size: 22px;
+        }
+        h2 {
+            margin: 30px 0 15px 0;
+            font-size: 18px;
+            color: #444;
+        }
+        h3 {
+            margin: 25px 0 10px 0;
+            font-size: 16px;
+            color: #555;
+            text-align: right;
+        }
+        .intro {
+            text-align: justify;
+            margin-bottom: 30px;
+            line-height: 1.8;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        input[type="text"],
+        input[type="number"],
+        select {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        .question-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 30px;
+        }
+        .question-table th, .question-table td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: center;
+        }
+        .question-table th {
+            background-color: #f2f2f2;
+        }
+        .question-table tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        .question-text {
+            text-align: right;
+            font-weight: normal;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            display: block;
+            margin: 30px auto;
+            width: 200px;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .warning {
+            color: #ff0000;
+            font-weight: bold;
+            text-align: center;
+            margin: 20px 0;
+            padding: 15px;
+            border: 1px solid #ff0000;
+            border-radius: 4px;
+            background-color: #ffeeee;
+        }
+        .thank-you {
+            text-align: center;
+            font-size: 18px;
+            color: #4CAF50;
+            margin: 40px 0;
+            padding: 20px;
+            border: 1px solid #4CAF50;
+            border-radius: 4px;
+            background-color: #f0fff0;
+        }
+        .hidden {
+            display: none;
+        }
+        .likert-scale {
+            font-size: 12px;
+            color: #666;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>پرسشنامه بررسی رابطه تعارض با والدین، بیثباتی هیجانی و وابستگی به فضای مجازی در دانشآموزان دختر دوره متوسطه اول</h1>
+        
+        <div class="intro">
+            <p>این پرسشنامه با هدف بررسی رابطه بین تعارض با والدین، بیثباتی هیجانی و وابستگی به فضای مجازی طراحی شده است. پاسخهای شما محرمانه خواهد ماند و فقط برای اهداف پژوهشی استفاده میشود. لطفاً با دقت و صداقت به سؤالات پاسخ دهید.</p>
+        </div>
+        
+        <form id="surveyForm">
+            <div id="personal-info">
+                <h2>مشخصات دموگرافیک</h2>
+                
+                <div class="form-group">
+                    <label for="firstName">نام:</label>
+                    <input type="text" id="firstName" name="firstName" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="lastName">نام خانوادگی:</label>
+                    <input type="text" id="lastName" name="lastName" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="nationalCode">کد ملی:</label>
+                    <input type="text" id="nationalCode" name="nationalCode" required pattern="\d{10}" title="کد ملی باید 10 رقم باشد">
+                </div>
+                
+                <div class="form-group">
+                    <label for="age">سن:</label>
+                    <input type="number" id="age" name="age" min="10" max="20" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="grade">پایه تحصیلی:</label>
+                    <select id="grade" name="grade" required>
+                        <option value="">-- انتخاب کنید --</option>
+                        <option value="هفتم">هفتم</option>
+                        <option value="هشتم">هشتم</option>
+                        <option value="نهم">نهم</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="academicStatus">وضعیت تحصیلی:</label>
+                    <select id="academicStatus" name="academicStatus" required>
+                        <option value="">-- انتخاب کنید --</option>
+                        <option value="خیلی خوب">خیلی خوب</option>
+                        <option value="خوب">خوب</option>
+                        <option value="متوسط">متوسط</option>
+                        <option value="ضعیف">ضعیف</option>
+                    </select>
+                </div>
+            </div>
+            
+            <div id="questionnaire">
+                <h2>بخش اول: تعارض با والدین</h2>
+                <div class="likert-scale">مقیاس لیکرت: ۱= هرگز، ۲= بهندرت، ۳= گاهی، ۴= اغلب، ۵= همیشه</div>
+                
+                <table class="question-table">
+                    <tr>
+                        <th width="60%">گویه</th>
+                        <th width="8%">۱</th>
+                        <th width="8%">۲</th>
+                        <th width="8%">۳</th>
+                        <th width="8%">۴</th>
+                        <th width="8%">۵</th>
+                    </tr>
+                    <tr>
+                        <td class="question-text">با والدینم بر سر مسائل مختلف جر و بحث میکنم.</td>
+                        <td><input type="radio" name="q1" value="1" required></td>
+                        <td><input type="radio" name="q1" value="2"></td>
+                        <td><input type="radio" name="q1" value="3"></td>
+                        <td><input type="radio" name="q1" value="4"></td>
+                        <td><input type="radio" name="q1" value="5"></td>
+                    </tr>
+                    <tr>
+                        <td class="question-text">احساس میکنم والدینم مرا درک نمیکنند.</td>
+                        <td><input type="radio" name="q2" value="1" required></td>
+                        <td><input type="radio" name="q2" value="2"></td>
+                        <td><input type="radio" name="q2" value="3"></td>
+                        <td><input type="radio" name="q2" value="4"></td>
+                        <td><input type="radio" name="q2" value="5"></td>
+                    </tr>
+                    <tr>
+                        <td class="question-text">وقتی با والدینم اختلافنظر دارم، آنها به حرفم گوش نمیدهند.</td>
+                        <td><input type="radio" name="q3" value="1" required></td>
+                        <td><input type="radio" name="q3" value="2"></td>
+                        <td><input type="radio" name="q3" value="3"></td>
+                        <td><input type="radio" name="q3" value="4"></td>
+                        <td><input type="radio" name="q3" value="5"></td>
+                    </tr>
+                    <tr>
+                        <td class="question-text">بعد از مشاجره با والدینم، احساس ناراحتی و تنهایی میکنم.</td>
+                        <td><input type="radio" name="q4" value="1" required></td>
+                        <td><input type="radio" name="q4" value="2"></td>
+                        <td><input type="radio" name="q4" value="3"></td>
+                        <td><input type="radio" name="q4" value="4"></td>
+                        <td><input type="radio" name="q4" value="5"></td>
+                    </tr>
+                    <tr>
+                        <td class="question-text">والدینم انتظارات زیادی از من دارند که نمیتوانم برآورده کنم.</td>
+                        <td><input type="radio" name="q5" value="1" required></td>
+                        <td><input type="radio" name="q5" value="2"></td>
+                        <td><input type="radio" name="q5" value="3"></td>
+                        <td><input type="radio" name="q5" value="4"></td>
+                        <td><input type="radio" name="q5" value="5"></td>
+                    </tr>
+                </table>
+                
+                <h2>بخش دوم: بیثباتی هیجانی</h2>
+                <div class="likert-scale">مقیاس لیکرت: ۱= کاملاً مخالفم، ۲= مخالفم، ۳= نظری ندارم، ۴= موافقم، ۵= کاملاً موافقم</div>
+                
+                <table class="question-table">
+                    <tr>
+                        <th width="60%">گویه</th>
+                        <th width="8%">۱</th>
+                        <th width="8%">۲</th>
+                        <th width="8%">۳</th>
+                        <th width="8%">۴</th>
+                        <th width="8%">۵</th>
+                    </tr>
+                    <tr>
+                        <td class="question-text">خلق و خوی من بهسرعت تغییر میکند.</td>
+                        <td><input type="radio" name="q6" value="1" required></td>
+                        <td><input type="radio" name="q6" value="2"></td>
+                        <td><input type="radio" name="q6" value="3"></td>
+                        <td><input type="radio" name="q6" value="4"></td>
+                        <td><input type="radio" name="q6" value="5"></td>
+                    </tr>
+                    <tr>
+                        <td class="question-text">اغلب بدون دلیل مشخص ناراحت یا عصبانی میشوم.</td>
+                        <td><input type="radio" name="q7" value="1" required></td>
+                        <td><input type="radio" name="q7" value="2"></td>
+                        <td><input type="radio" name="q7" value="3"></td>
+                        <td><input type="radio" name="q7" value="4"></td>
+                        <td><input type="radio" name="q7" value="5"></td>
+                    </tr>
+                    <tr>
+                        <td class="question-text">کنترل احساساتم برایم سخت است.</td>
+                        <td><input type="radio" name="q8" value="1" required></td>
+                        <td><input type="radio" name="q8" value="2"></td>
+                        <td><input type="radio" name="q8" value="3"></td>
+                        <td><input type="radio" name="q8" value="4"></td>
+                        <td><input type="radio" name="q8" value="5"></td>
+                    </tr>
+                    <tr>
+                        <td class="question-text">وقتی مشکلی پیش میآید، بهراحتی دچار استرس میشوم.</td>
+                        <td><input type="radio" name="q9" value="1" required></td>
+                        <td><input type="radio" name="q9" value="2"></td>
+                        <td><input type="radio" name="q9" value="3"></td>
+                        <td><input type="radio" name="q9" value="4"></td>
+                        <td><input type="radio" name="q9" value="5"></td>
+                    </tr>
+                    <tr>
+                        <td class="question-text">احساساتم بر تصمیمگیریهایم تأثیر زیادی میگذارد.</td>
+                        <td><input type="radio" name="q10" value="1" required></td>
+                        <td><input type="radio" name="q10" value="2"></td>
+                        <td><input type="radio" name="q10" value="3"></td>
+                        <td><input type="radio" name="q10" value="4"></td>
+                        <td><input type="radio" name="q10" value="5"></td>
+                    </tr>
+                </table>
+                
+                <h2>بخش سوم: وابستگی به فضای مجازی</h2>
+                <div class="likert-scale">مقیاس لیکرت: ۱= اصلاً، ۲= بهندرت، ۳= گاهی، ۴= زیاد، ۵= خیلی زیاد</div>
+                
+                <table class="question-table">
+                    <tr>
+                        <th width="60%">گویه</th>
+                        <th width="8%">۱</th>
+                        <th width="8%">۲</th>
+                        <th width="8%">۳</th>
+                        <th width="8%">۴</th>
+                        <th width="8%">۵</th>
+                    </tr>
+                    <tr>
+                        <td class="question-text">بدون اینترنت احساس بیقراری میکنم.</td>
+                        <td><input type="radio" name="q11" value="1" required></td>
+                        <td><input type="radio" name="q11" value="2"></td>
+                        <td><input type="radio" name="q11" value="3"></td>
+                        <td><input type="radio" name="q11" value="4"></td>
+                        <td><input type="radio" name="q11" value="5"></td>
+                    </tr>
+                    <tr>
+                        <td class="question-text">زمان زیادی را در شبکههای اجتماعی میگذرانم.</td>
+                        <td><input type="radio" name="q12" value="1" required></td>
+                        <td><input type="radio" name="q12" value="2"></td>
+                        <td><input type="radio" name="q12" value="3"></td>
+                        <td><input type="radio" name="q12" value="4"></td>
+                        <td><input type="radio" name="q12" value="5"></td>
+                    </tr>
+                    <tr>
+                        <td class="question-text">وقتی از فضای مجازی دورم، احساس اضطراب دارم.</td>
+                        <td><input type="radio" name="q13" value="1" required></td>
+                        <td><input type="radio" name="q13" value="2"></td>
+                        <td><input type="radio" name="q13" value="3"></td>
+                        <td><input type="radio" name="q13" value="4"></td>
+                        <td><input type="radio" name="q13" value="5"></td>
+                    </tr>
+                    <tr>
+                        <td class="question-text">استفاده از فضای مجازی روی درس و خوابم تأثیر منفی گذاشته است.</td>
+                        <td><input type="radio" name="q14" value="1" required></td>
+                        <td><input type="radio" name="q14" value="2"></td>
+                        <td><input type="radio" name="q14" value="3"></td>
+                        <td><input type="radio" name="q14" value="4"></td>
+                        <td><input type="radio" name="q14" value="5"></td>
+                    </tr>
+                    <tr>
+                        <td class="question-text">ترجیح میدهم بهجای معاشرت واقعی، در فضای مجازی باشم.</td>
+                        <td><input type="radio" name="q15" value="1" required></td>
+                        <td><input type="radio" name="q15" value="2"></td>
+                        <td><input type="radio" name="q15" value="3"></td>
+                        <td><input type="radio" name="q15" value="4"></td>
+                        <td><input type="radio" name="q15" value="5"></td>
+                    </tr>
+                </table>
+            </div>
+            
+            <button type="submit">ارسال پاسخ‌ها</button>
+        </form>
+        
+        <div id="duplicateWarning" class="warning hidden">
+            <p>کد ملی وارد شده قبلاً در سیستم ثبت شده است. آیا مایلید پاسخ‌های جدید جایگزین پاسخ‌های قبلی شوند؟</p>
+            <button id="confirmUpdate">بله، پاسخ‌های جدید را ثبت کن</button>
+            <button id="cancelUpdate">خیر، ممنون</button>
+        </div>
+        
+        <div id="thankYouMessage" class="thank-you hidden">
+            <p>با تشکر از مشارکت شما در این پژوهش. پاسخ‌های شما با موفقیت ثبت شد.</p>
+        </div>
+        
+        <div id="cancelMessage" class="thank-you hidden">
+            <p>با تشکر از وقتی که صرف کردید. پاسخ‌های قبلی شما حفظ شده است.</p>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('surveyForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // جمع‌آوری داده‌های فرم
+            const formData = {
+                firstName: document.getElementById('firstName').value,
+                lastName: document.getElementById('lastName').value,
+                nationalCode: document.getElementById('nationalCode').value,
+                age: document.getElementById('age').value,
+                grade: document.getElementById('grade').value,
+                academicStatus: document.getElementById('academicStatus').value,
+                answers: {}
+            };
+            
+            // جمع‌آوری پاسخ‌ها
+            for (let i = 1; i <= 15; i++) {
+                const selectedOption = document.querySelector(`input[name="q${i}"]:checked`);
+                if (selectedOption) {
+                    formData.answers[`q${i}`] = selectedOption.value;
+                }
+            }
+            
+            // در اینجا باید کد ارسال به سرور و بررسی تکراری بودن کد ملی قرار گیرد
+            // برای نمونه، از localStorage استفاده می‌کنیم
+            const existingData = localStorage.getItem('surveyData');
+            let surveyData = existingData ? JSON.parse(existingData) : [];
+            
+            // بررسی تکراری بودن کد ملی
+            const duplicateIndex = surveyData.findIndex(item => item.nationalCode === formData.nationalCode);
+            
+            if (duplicateIndex !== -1) {
+                // نمایش هشدار برای پاسخ تکراری
+                document.getElementById('duplicateWarning').classList.remove('hidden');
+                document.getElementById('surveyForm').classList.add('hidden');
+                
+                document.getElementById('confirmUpdate').addEventListener('click', function() {
+                    // جایگزینی پاسخ قدیمی با جدید
+                    surveyData[duplicateIndex] = formData;
+                    localStorage.setItem('surveyData', JSON.stringify(surveyData));
+                    
+                    document.getElementById('duplicateWarning').classList.add('hidden');
+                    document.getElementById('thankYouMessage').classList.remove('hidden');
+                });
+                
+                document.getElementById('cancelUpdate').addEventListener('click', function() {
+                    document.getElementById('duplicateWarning').classList.add('hidden');
+                    document.getElementById('cancelMessage').classList.remove('hidden');
+                });
+            } else {
+                // ذخیره پاسخ جدید
+                surveyData.push(formData);
+                localStorage.setItem('surveyData', JSON.stringify(surveyData));
+                document.getElementById('thankYouMessage').classList.remove('hidden');
+                document.getElementById('surveyForm').classList.add('hidden');
+            }
+            
+           // در یک محیط واقعی، اینجا باید داده‌ها به سرور ارسال شوند:
+            fetch('/save-survey', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(formData),
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.duplicate) {
+                    // نمایش هشدار برای پاسخ تکراری
+                } else {
+                    // نمایش پیام تشکر
+                }
+            });
+        });
+    </script>
+</body>
+</html>
